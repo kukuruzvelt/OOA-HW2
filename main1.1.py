@@ -1,9 +1,9 @@
 import numbers
 
 
-class Rectangle: #make width and length private
+class Rectangle:  # make width and length private
     def __init__(self):
-        self.width, self.length = 1, 1
+        self.__width, self.__length = 1, 1
 
     def __paramSetter(self, number):
         maxVal = 20.0
@@ -11,29 +11,33 @@ class Rectangle: #make width and length private
         if isinstance(number, numbers.Number) and minVal < number < maxVal:
             return number
         else:
-            print("ERROR: can't change parameter to \"" + str(number) + "\"")
+            raise Exception("ERROR: can't change parameter to \"" + str(number) + "\"")
 
     def setWidth(self, width):
-        temp = self.__paramSetter(width)
-        if temp:
-            self.width = temp
+        try:
+            temp = self.__paramSetter(width)
+            self.__width = temp
+        except Exception as e:
+            print(e)
 
     def setLength(self, length):
-        temp = self.__paramSetter(length)
-        if temp:
-            self.length = temp
+        try:
+            temp = self.__paramSetter(length)
+            self.__length = temp
+        except Exception as e:
+            print(e)
 
     def getWidth(self):
-        return self.width
+        return self.__width
 
     def getLength(self):
-        return self.length
+        return self.__length
 
     def getArea(self):
-        return self.length * self.width
+        return self.__length * self.__width
 
     def getPerimeter(self):
-        return self.length * 2 + self.width * 2
+        return self.__length * 2 + self.__width * 2
 
 
 r = Rectangle()
@@ -43,4 +47,4 @@ r.setWidth(19)
 r.setWidth(-1)
 print("area: " + str(r.getArea()))
 print("perimeter: " + str(r.getPerimeter()))
-r2 = Rectangle()
+
