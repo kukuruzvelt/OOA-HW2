@@ -1,7 +1,7 @@
 import numbers
 
 
-class Rectangle:  # make width and length private
+class Rectangle:
     def __init__(self):
         self.__width, self.__length = 1, 1
 
@@ -47,4 +47,3 @@ r.setWidth(19)
 r.setWidth(-1)
 print("area: " + str(r.getArea()))
 print("perimeter: " + str(r.getPerimeter()))
-
