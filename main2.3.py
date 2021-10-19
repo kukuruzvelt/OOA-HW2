@@ -1,4 +1,4 @@
-class Group:
+class Group: #докстринги во всех программах
     __max_size_of_group = 20
 
     def __init__(self, students):

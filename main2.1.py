@@ -1,7 +1,7 @@
 import numbers
 
 
-class Product:
+class Product:# цена не может быть отрицательной, бросать разные ошибки в зависимости от неправмльного аргумента
     def __init__(self, price, description, dimensions):
         if (isinstance(price, numbers.Number) and isinstance(description, str)
                 and isinstance(dimensions, numbers.Number)):
@@ -15,7 +15,7 @@ class Product:
         return self.__price
 
 
-class Customer:
+class Customer:#фио не пустое, регулярное выражение для номера телефона
     def __init__(self, name, surname, mobile_phone):
         if isinstance(name, str) and isinstance(surname, str) and isinstance(mobile_phone, str):
             self.__name = name
@@ -34,7 +34,7 @@ class Customer:
         return self.__mobile_phone
 
 
-class Order:
+class Order:#сделать метод дабавления и удаления заказа
     def __init__(self, customer, products):
         if (isinstance(products, list) and all(isinstance(x, Product) for x in products)
                 and isinstance(customer, Customer)):
@@ -46,7 +46,7 @@ class Order:
     def getTotalPrice(self):
         total_prise = 0
         for i in range(len(self.__products)):
-            print("a",total_prise)
+            print("a", total_prise)
             total_prise += self.__products[i].getPrice()
         return total_prise
 

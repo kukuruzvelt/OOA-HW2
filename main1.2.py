@@ -1,12 +1,14 @@
 from math import gcd
 
 
-class Rational:
+class Rational:# неправильный конструктор
     def __init__(self, num, denom):
         if isinstance(num, int) and isinstance(denom, int):
             self.__numerator = num
             self.__denominator = denom
             self.__simplification()
+        elif denom == 0:
+            raise ValueError("wrong value")
         else:
             raise TypeError("wrong arguments")
 
