@@ -1,31 +1,51 @@
 from os.path import isfile
 
 
-class Analyzer:# не читать файлы через read, рабоотать с ним как с последовательностью
+class Analyzer:
+    """ Class for working with text file. """
+
     def __init__(self, filename):
+        """ Checks arguments against values and initializes class variables. """
         if isfile(filename):
             self.__filename = filename
         else:
-            raise TypeError("wrong arguments")
+            raise ValueError("wrong value")
 
     def countCharacters(self):
+        """ Counts and returns the number of characters. """
         with open(self.__filename) as f:
-            text = f.read()
-            text = text.split()
-            text = ''.join(text)
-        return len(text)
+            num = 0
+            while True:
+                c = f.read(1)
+                if c == '':
+                    break
+                elif not c == ' ':
+                    num += 1
+        return num
 
     def countWords(self):
+        """ Counts and returns the number of words. """
         with open(self.__filename) as f:
-            text = f.read()
-            text = text.split()
-        return len(text)
+            num = 1
+            while True:
+                c = f.read(1)
+                if c == '':
+                    break
+                elif c == ' ':
+                    num += 1
+        return num
 
     def countSentences(self):
+        """ Counts and returns the number of sentences. """
         with open(self.__filename) as f:
-            text = f.read()
-            text = text.count('.') + text.count('!') + text.count('?')
-        return text
+            num = 0
+            while True:
+                c = f.read(1)
+                if c == '':
+                    break
+                elif c == '.' or c == '!' or c == '?':
+                    num += 1
+        return num
 
 
 try:
@@ -33,6 +53,5 @@ try:
     print(a.countCharacters(), "Characters")
     print(a.countWords(), "Words")
     print(a.countSentences(), "Sentences")
-except TypeError as e:
+except ValueError as e:
     print(e)
-

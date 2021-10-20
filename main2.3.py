@@ -1,7 +1,9 @@
-class Group: #докстринги во всех программах
+class Group:
+    """ Class for working with a group. """
     __max_size_of_group = 20
 
     def __init__(self, students):
+        """ Checks arguments against values and initializes class variables. """
         if (isinstance(students, list) and len(students) < Group.__max_size_of_group
                 and all(isinstance(x, Student) for x in students) and all(students.count(x) == 1 for x in students)):
             self.__students = students
@@ -9,12 +11,14 @@ class Group: #докстринги во всех программах
             raise TypeError("wrong arguments")
 
     def __count_average_score(self, student):
+        """ Counts and returns an average score. """
         average_score = 0.0
         for mark in student.get_grades():
             average_score += mark
         return average_score / len(student.get_grades())
 
     def return_top_five(self):
+        """ Returns top 5 students by average score. """
         group = dict()
         result = list()
         for student in self.__students:
@@ -26,7 +30,10 @@ class Group: #докстринги во всех программах
 
 
 class Student:
+    """ Class for working with a student. """
+
     def __init__(self, name, surname, record_book_number, grades):
+        """ Checks arguments against values and initializes class variables. """
         if (isinstance(name, str) and isinstance(surname, str)
                 and isinstance(record_book_number, int) and isinstance(grades, list)):
             self.__name = name
@@ -40,6 +47,7 @@ class Student:
         return self.__name + " " + self.__surname
 
     def get_grades(self):
+        """ Returns grades. """
         return self.__grades
 
 

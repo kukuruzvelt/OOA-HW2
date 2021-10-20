@@ -1,6 +1,8 @@
 class BinarySearchTree:
+    """ Class for working with a binary tree. """
 
     def __init__(self):
+        """ Checks arguments against values and initializes class variables. """
         self.root = None
         self.size = 0
 
