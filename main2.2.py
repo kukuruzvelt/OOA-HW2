@@ -1,4 +1,3 @@
-import string
 from os.path import isfile
 import re
 
@@ -25,7 +24,7 @@ class Analyzer:
         """ Counts and returns the number of words. """
         with open(self.__filename) as f:
             text = f.read()
-            text = re.sub(r'[,.!?]', ' ', text)
+            text = re.sub(r'[^\'^\w]', ' ', text)
             text = text.split()
         return len(text)
 

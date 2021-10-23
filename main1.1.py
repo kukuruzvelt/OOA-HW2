@@ -4,14 +4,10 @@ import numbers
 class Rectangle:
     """ Class for working with a rectangle. """
 
-    def __init__(self, width=None, length=None):
+    def __init__(self, width=1, length=1):
         """ Checks arguments against values and initializes class variables. """
-        if not width:
-            width = 1
-        if not length:
-            length = 1
-        self.setLength(length)
-        self.setWidth(width)
+        self.length = length
+        self.width = width
 
     def __paramSetter(self, number):
         """ Interface for others setters. """
@@ -23,24 +19,27 @@ class Rectangle:
             raise ValueError("wrong value")
         return number
 
+    @property
+    def width(self):
+        """ Returns width. """
+        return self.__width
 
-    def setWidth(self, width):
+    @property
+    def length(self):
+        """ Returns length. """
+        return self.__length
+
+    @width.setter
+    def width(self, width):
         """ Sets the width. """
         temp = self.__paramSetter(width)
         self.__width = temp
 
-    def setLength(self, length):
+    @length.setter
+    def length(self, length):
         """ Sets the length. """
         temp = self.__paramSetter(length)
         self.__length = temp
-
-    def getWidth(self):
-        """ Returns width. """
-        return self.__width
-
-    def getLength(self):
-        """ Returns length. """
-        return self.__length
 
     def getArea(self):
         """ Counts and returns area. """

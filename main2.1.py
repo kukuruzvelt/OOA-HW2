@@ -7,11 +7,27 @@ class Product:
 
     def __init__(self, price, description, dimensions):
         """ Initializes variables. """
-        self.setPrice(price)
-        self.setDescription(description)
-        self.setDimensions(dimensions)
+        self.price = price
+        self.description = description
+        self.dimensions = dimensions
 
-    def setPrice(self, price):
+    @property
+    def price(self):
+        """ Returns price. """
+        return self.__price
+
+    @property
+    def description(self):
+        """ Returns description. """
+        return self.__description
+
+    @property
+    def dimensions(self):
+        """ Returns dimensions. """
+        return self.__dimensions
+
+    @price.setter
+    def price(self, price):
         """ Sets price. """
         if not isinstance(price, numbers.Number):
             raise TypeError("argument is not a number")
@@ -19,21 +35,19 @@ class Product:
             raise ValueError("price < 0")
         self.__price = price
 
-    def setDescription(self, description):
+    @description.setter
+    def description(self, description):
         """ Sets description. """
         if not isinstance(description, str):
             raise TypeError("argument is not a string")
         self.__description = description
 
-    def setDimensions(self, dimensions):
+    @dimensions.setter
+    def dimensions(self, dimensions):
         """ Sets dimensions. """
         if not isinstance(dimensions, numbers.Number):
             raise TypeError("argument is not a number")
         self.__dimensions = dimensions
-
-    def getPrice(self):
-        """ Returns price. """
-        return self.__price
 
 
 class Customer:
@@ -41,11 +55,27 @@ class Customer:
 
     def __init__(self, name, surname, mobile_phone):
         """ Initializes variables. """
-        self.setName(name)
-        self.setSurname(surname)
-        self.setMobilePhone(mobile_phone)
+        self.name = name
+        self.surname = surname
+        self.mobile_phone = mobile_phone
 
-    def setName(self, name):
+    @property
+    def name(self):
+        """ Returns name. """
+        return self.__name
+
+    @property
+    def surname(self):
+        """ Returns surname. """
+        return self.__surname
+
+    @property
+    def mobile_phone(self):
+        """ Returns phone number. """
+        return self.__mobile_phone
+
+    @name.setter
+    def name(self, name):
         """ Sets name. """
         if not isinstance(name, str):
             raise TypeError("argument is not a string")
@@ -53,7 +83,8 @@ class Customer:
             raise ValueError("wrong value")
         self.__name = name
 
-    def setSurname(self, surname):
+    @surname.setter
+    def surname(self, surname):
         """ Sets surname. """
         if not isinstance(surname, str):
             raise TypeError("argument is not a string")
@@ -61,7 +92,8 @@ class Customer:
             raise ValueError("wrong value")
         self.__surname = surname
 
-    def setMobilePhone(self, mobile_phone):
+    @mobile_phone.setter
+    def mobile_phone(self, mobile_phone):
         """ Sets mobile phone. """
         if not isinstance(mobile_phone, str):
             raise TypeError("argument is not a string")
@@ -69,34 +101,32 @@ class Customer:
             raise ValueError("wrong value")
         self.__mobile_phone = mobile_phone
 
-    def getName(self):
-        """ Returns name. """
-        return self.__name
-
-    def getSurname(self):
-        """ Returns surname. """
-        return self.__surname
-
-    def getMobilePhone(self):
-        """ Returns phone number. """
-        return self.__mobile_phone
-
 
 class Order:
     """ Class for working with orders. """
 
     def __init__(self, customer, products):
         """ Initializes variables. """
-        self.setCustomer(customer)
-        self.setProducts(products)
+        self.customer = customer
+        self.products = products
 
-    def setCustomer(self, customer):
+    @property
+    def customer(self):
+        return self.__customer
+
+    @property
+    def products(self):
+        return self.__products
+
+    @customer.setter
+    def customer(self, customer):
         """ Sets customer. """
         if not isinstance(customer, Customer):
             raise TypeError("argument is not a customer")
         self.__customer = customer
 
-    def setProducts(self, products):
+    @products.setter
+    def products(self, products):
         """ Sets products"""
         if not isinstance(products, list) or not all(isinstance(x, Product) for x in products):
             raise TypeError("argument is not a list of products")
@@ -106,7 +136,7 @@ class Order:
         """ Counts and returns total price. """
         total_prise = 0
         for i in range(len(self.__products)):
-            total_prise += self.__products[i].getPrice()
+            total_prise += self.__products[i].price
         return total_prise
 
     def addProduct(self, product):

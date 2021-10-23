@@ -4,9 +4,14 @@ class Group:
 
     def __init__(self, students):
         """ Initializes variables. """
-        self.setStudents(students)
+        self.students=students
 
-    def setStudents(self, students):
+    @property
+    def students(self):
+        return self.__students
+
+    @students.setter
+    def students(self, students):
         """ Sets students. """
         if not isinstance(students, list):
             raise TypeError("argument is not a list")
@@ -32,27 +37,21 @@ class Group:
         """ Checks if student is already in list. """
         num = 0
         for s in students:
-            if s.getRecordBookNumber() == student.getRecordBookNumber():
+            if s.record_book_number == student.record_book_number:
                 num += 1
         return num
 
     def __count_average_score(self, student):
         """ Counts and returns an average score. """
         average_score = 0.0
-        for mark in student.get_grades():
+        for mark in student.grades:
             average_score += mark
-        return average_score / len(student.get_grades())
+        return average_score / len(student.grades)
 
     def return_top_five(self):
         """ Returns top 5 students by average score. """
-        group = dict()
-        result = list()
-        for student in self.__students:
-            group[student] = self.__count_average_score(student)
-        sorted_keys = sorted(group, key=group.get)
-        for i in range(1, 6):
-            result.append(sorted_keys[len(sorted_keys) - i])
-        return result
+        self.__students.sort(key=lambda student: student.grades, reverse=True)
+        return self.__students[:5]
 
 
 class Student:
@@ -60,12 +59,31 @@ class Student:
 
     def __init__(self, name, surname, record_book_number, grades):
         """ Initializes variables. """
-        self.setName(name)
-        self.setSurname(surname)
-        self.setRecordBookNumber(record_book_number)
-        self.setGrades(grades)
+        self.name = name
+        self.surname = surname
+        self.record_book_number = record_book_number
+        self.grades = grades
 
-    def setName(self, name):
+    @property
+    def name(self):
+        return self.__name
+
+    @property
+    def surname(self):
+        return self.__surname
+
+    @property
+    def record_book_number(self):
+        """ Returns name. """
+        return self.__record_book_number
+
+    @property
+    def grades(self):
+        """ Returns grades. """
+        return self.__grades
+
+    @name.setter
+    def name(self, name):
         """ Sets name. """
         if not isinstance(name, str):
             raise TypeError("argument is not a string")
@@ -73,7 +91,8 @@ class Student:
             raise ValueError("name is empty")
         self.__name = name
 
-    def setSurname(self, surname):
+    @surname.setter
+    def surname(self, surname):
         """ Sets surname. """
         if not isinstance(surname, str):
             raise TypeError("argument is not a string")
@@ -81,34 +100,34 @@ class Student:
             raise ValueError("surname is empty")
         self.__surname = surname
 
-    def setRecordBookNumber(self, record_book_number):
+    @record_book_number.setter
+    def record_book_number(self, record_book_number):
         """ Sets record book number. """
         if not isinstance(record_book_number, int):
             raise TypeError("argument is not an int")
         self.__record_book_number = record_book_number
 
-    def setGrades(self, grades):
+    @grades.setter
+    def grades(self, grades):
         """ Sets grades. """
         if not isinstance(grades, list):
             raise TypeError("argument is not a list")
+        if not all(isinstance(x, int) for x in grades):
+            raise TypeError("not only ints in list")
+        if not all(0 < x < 100 for x in grades):
+            raise ValueError("wrong grade")
         self.__grades = grades
 
     def addGrade(self, grade):
         """ Adds a grade. """
         if not isinstance(grade, int):
             raise TypeError("argument is not an int")
+        if not 0 < grade < 100:
+            raise ValueError("wrong grade")
         self.__grades.append(grade)
 
     def __str__(self):
         return self.__name + " " + self.__surname
-
-    def getRecordBookNumber(self):
-        """ Returns name. """
-        return self.__record_book_number
-
-    def get_grades(self):
-        """ Returns grades. """
-        return self.__grades
 
 
 try:
@@ -126,4 +145,6 @@ try:
     for i in gr:
         print(i)
 except TypeError as e:
+    print(e)
+except ValueError as e:
     print(e)

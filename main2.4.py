@@ -13,6 +13,7 @@ class BinarySearchTree:  # добавить проверки типов
         return self.size
 
     def put(self, key, val):
+        """ Puts element in binary tree. """
         if not isinstance(key, int):
             raise TypeError("key is not int")
         if not isinstance(val, numbers.Number):
@@ -36,6 +37,7 @@ class BinarySearchTree:  # добавить проверки типов
                 currentNode.rightChild = TreeNode(key, val, parent=currentNode)
 
     def get(self, key):
+        """ Gets element from binary tree. """
         if self.root:
             res = self.__get(key, self.root)
             if res:
@@ -60,6 +62,7 @@ class BinarySearchTree:  # добавить проверки типов
 
 
 class TreeNode:
+    """ Contains tree node. """
     def __init__(self, key, val, left=None, right=None,
                  parent=None):
         self.key = key
@@ -69,9 +72,11 @@ class TreeNode:
         self.parent = parent
 
     def hasLeftChild(self):
+        """ Determines if there is a left child. """
         return self.leftChild
 
     def hasRightChild(self):
+        """ Determines if there is a right child. """
         return self.rightChild
 
 
