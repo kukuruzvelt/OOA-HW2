@@ -1,20 +1,30 @@
 from math import gcd
 
 
-class Rational:
+class Rational:  # добавить сеттер с проверками в большинство программ
     """ Class for working with a rational fractions. """
 
     def __init__(self, num, denom):
-        """ Checks arguments against values and initializes class variables. """
-        if isinstance(num, int) and isinstance(denom, int):
-            if denom == 0:
-                raise ValueError("wrong value")
-            else:
-                self.__numerator = num
-                self.__denominator = denom
-                self.__simplification()
-        else:
-            raise TypeError("wrong arguments")
+        """ Initializes variables. """
+        self.setNum(num)
+        self.setDenom(denom)
+        self.__simplification()
+
+    def setNum(self, num):
+        """ Sets numerator. """
+        if not isinstance(num, int):
+            raise TypeError("argument is not int")
+        self.__numerator = num
+
+
+    def setDenom(self, denom):
+        """ Sets denominator. """
+        if not isinstance(denom, int):
+            raise TypeError("argument is not int")
+        if denom == 0:
+            raise ValueError("denominator = 0")
+        self.__denominator = denom
+
 
     def __simplification(self):
         """ Simplifies numbers by dividing them by the greatest common factor. """
@@ -32,9 +42,9 @@ class Rational:
 
 
 try:
-    r = Rational(5, 15)
-    print(r.returnFraction())
-    print(r.returnResult())
+    rational = Rational(5, 15)
+    print(rational.returnFraction())
+    print(rational.returnResult())
 except TypeError as e:
     print(e)
 except ValueError as e:

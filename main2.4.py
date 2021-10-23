@@ -1,8 +1,11 @@
-class BinarySearchTree:
+import numbers
+
+
+class BinarySearchTree:  # добавить проверки типов
     """ Class for working with a binary tree. """
 
     def __init__(self):
-        """ Checks arguments against values and initializes class variables. """
+        """ Initializes variables. """
         self.root = None
         self.size = 0
 
@@ -10,43 +13,44 @@ class BinarySearchTree:
         return self.size
 
     def put(self, key, val):
+        if not isinstance(key, int):
+            raise TypeError("key is not int")
+        if not isinstance(val, numbers.Number):
+            raise TypeError("val is not number")
         if self.root:
-            self._put(key, val, self.root)
+            self.__put(key, val, self.root)
         else:
             self.root = TreeNode(key, val)
         self.size = self.size + 1
 
-    def _put(self, key, val, currentNode):
+    def __put(self, key, val, currentNode):
         if key < currentNode.key:
             if currentNode.hasLeftChild():
-                self._put(key, val, currentNode.leftChild)
+                self.__put(key, val, currentNode.leftChild)
             else:
                 currentNode.leftChild = TreeNode(key, val, parent=currentNode)
         else:
             if currentNode.hasRightChild():
-                self._put(key, val, currentNode.rightChild)
+                self.__put(key, val, currentNode.rightChild)
             else:
                 currentNode.rightChild = TreeNode(key, val, parent=currentNode)
 
     def get(self, key):
         if self.root:
-            res = self._get(key, self.root)
+            res = self.__get(key, self.root)
             if res:
-                return res.payload
-            else:
-                return None
-        else:
-            return None
+                return res.val
+        return None
 
-    def _get(self, key, currentNode):
+    def __get(self, key, currentNode):
         if not currentNode:
-            return None
+            raise ValueError("wrong key")
         elif currentNode.key == key:
             return currentNode
         elif key < currentNode.key:
-            return self._get(key, currentNode.leftChild)
+            return self.__get(key, currentNode.leftChild)
         else:
-            return self._get(key, currentNode.rightChild)
+            return self.__get(key, currentNode.rightChild)
 
     def __getitem__(self, key):
         return self.get(key)
@@ -59,7 +63,7 @@ class TreeNode:
     def __init__(self, key, val, left=None, right=None,
                  parent=None):
         self.key = key
-        self.payload = val
+        self.val = val
         self.leftChild = left
         self.rightChild = right
         self.parent = parent
@@ -71,12 +75,18 @@ class TreeNode:
         return self.rightChild
 
 
-bst = BinarySearchTree()
-bst[5] = 10
-bst[1] = 20
-bst[3] = 30
-bst[4] = 40
+try:
+    bst = BinarySearchTree()
+    bst[5] = 10
+    bst[1] = 20
+    bst[3] = 30
+    bst[4] = 40
 
-code = int(input("Enter code: "))
-number = int(input("Enter num: "))
-print("total value = ", bst[code]*number)
+    code = int(input("Enter code: "))
+    number = float(input("Enter num: "))
+    print("total value = ", bst[code] * number)
+
+except TypeError as e:
+    print(e)
+except ValueError as e:
+    print(e)
